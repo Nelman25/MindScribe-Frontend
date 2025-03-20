@@ -4,6 +4,7 @@ import Footer from "../sections/Footer";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoFacebook } from "react-icons/io5";
 import { FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
   return (
@@ -108,7 +109,9 @@ export default function Signup() {
             </div>
             <span className="text-text block text-center py-4">
               Already have an account?
-              <span className="text-primary"> Sign in</span>
+              <Link to="/login">
+                <span className="text-primary hover:underline"> Sign in</span>
+              </Link>
             </span>
           </div>
         </div>

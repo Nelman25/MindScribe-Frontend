@@ -4,6 +4,7 @@ import Footer from "../sections/Footer";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoFacebook } from "react-icons/io5";
 import { FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 export default function Login() {
   return (
@@ -16,7 +17,7 @@ export default function Login() {
 
       <main className="flex flex-1 items-center justify-center">
         <div className="flex max-w-[900px] w-full h-[700px] max-xl:max-w-[700px] max-lg:flex-col max-lg:h-auto max-lg:my-8 max-lg:max-w-[600px] bg-white rounded-lg overflow-hidden shadow-lg">
-          <div className="max-lg:w-full w-1/2 bg-primary h-full px-8 flex flex-col gap-4 items-center justify-center">
+          <div className="max-lg:w-full w-1/2 bg-primary  h-full px-8 flex flex-col gap-4 items-center justify-center">
             <h2 className="max-lg:py-4 text-white text-3xl text-center font-medium">
               Welcome to MindScribe
             </h2>
@@ -81,7 +82,11 @@ export default function Login() {
             </div>
             <span className="text-text block text-center py-4">
               Don't have an account?
-              <span className="text-primary"> Sign up for free</span>
+              <Link to="/signup">
+                <span className="text-primary hover:underline">
+                  Sign up for free
+                </span>
+              </Link>
             </span>
           </div>
         </div>
