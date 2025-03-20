@@ -1,3 +1,5 @@
+import Button from "../components/Button";
+
 export default function LandingCTA() {
   return (
     <section className="bg-gradient-to-b from-primary/20 to-white h-[50vh] flex flex-col items-center">
@@ -9,9 +11,7 @@ export default function LandingCTA() {
         insights with our AI-powered journal that helps you understand yourself
         better.
       </p>
-      <button className="py-3 px-6 my-8 text-xl text-white bg-primary rounded-md max-sm:text-base">
-        Create Your Free Journal
-      </button>
+      <Button type="default">Create Your Free Journal</Button>
     </section>
   );
 }
