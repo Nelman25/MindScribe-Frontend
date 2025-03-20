@@ -1,3 +1,9 @@
+import LandingPage from "./pages/LandingPage";
+
 export default function App() {
-  return <div>Hello</div>;
+  return (
+    <div>
+      <LandingPage />
+    </div>
+  );
 }
