@@ -107,7 +107,14 @@ export const JOURNAL_ENTRIES = [
     date: "March 15, 2025",
     mood: "Motivated",
     text: "I finally went back to the gym today after weeks of procrastination. It felt amazing to get my body moving again. I also listened to an inspiring podcast on personal growth...",
-    tags: ["Fitness", "Motivation", "Self-improvement"],
+    tags: [
+      "Fitness",
+      "Motivation",
+      "Self-improvement",
+      "Fitness",
+      "Motivation",
+      "Self-improvement",
+    ],
   },
   {
     title: "Deep work and focus",

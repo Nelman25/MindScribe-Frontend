@@ -1,9 +1,10 @@
 import Button from "../components/Button";
-import { CiFaceSmile } from "react-icons/ci";
-import { MdMood } from "react-icons/md";
+
 import FilterButton from "../components/FilterButton";
 import JournalEntryCard from "../components/JournalEntryCard";
 import { JOURNAL_ENTRIES } from "../constants/constants";
+import DashboardAnalytics from "../sections/DashboardAnalytics";
+import MonthlyMoodAnalysisCard from "../sections/MonthlyMoodAnalysisCard";
 
 export default function Dashboard() {
   return (
@@ -12,7 +13,8 @@ export default function Dashboard() {
         <h2 className="text-3xl max-lg:text-xl text-primary font-bold">
           MindScribe
         </h2>
-        <ul className="flex gap-4 justify-between items-center text-xl max-w-[400px] w-full">
+
+        <ul className="flex gap-4 justify-between items-center text-xl max-lg:text-base max-md:hidden max-w-[400px] w-full">
           <li className="hover:text-primary transition-all duration-300">
             Dashboard
           </li>
@@ -26,71 +28,22 @@ export default function Dashboard() {
             Settings
           </li>
         </ul>
+
         {/* Profile pic ng user */}
         <div className="flex items-center gap-4">
-          <Button type="default">+ New Entry</Button>
-          <div className="size-12 rounded-full bg-pl border border-primary"></div>
+          <Button type="default" className="max-lg:text-base">
+            + New Entry
+          </Button>
+          <div className="size-12 max-lg:size-10 rounded-full bg-pl border border-primary"></div>
         </div>
       </header>
 
-      <main className="py-4 max-w-[1440px] mx-auto">
+      <main className="py-4 max-w-[1440px] mx-auto max-2xl:max-w-5xl max-lg:px-20">
         <h1 className="text-3xl font-bold">My Journal</h1>
-        <div className="border-l-4 border-l-primary rounded-lg my-4 overflow-hidden shadow">
-          <div className="flex justify-between items-center px-4 bg-pl">
-            <div className="flex gap-2 items-center py-4">
-              <CiFaceSmile className="size-6" />
-              <h3>Monthly Mood Analysis</h3>
-            </div>
-            <span className="text-text font-light">March 2025</span>
-          </div>
-          <div className="w-full h-auto px-8 py-4 flex items-center gap-4">
-            <div className="p-3 bg-pl rounded-full ">
-              <MdMood className="text-primary size-6" />
-            </div>
-            <p className="text-text">
-              You've been maintaining a
-              <strong> generally positive outlook</strong> this month despite a
-              few challenges. Your entries show resilience, particularly when
-              facing career setbacks. I notice you're finding joy in nature and
-              social connections, which are great for mental wellbeing. Consider
-              setting aside more time for the outdoor activities that energize
-              you, as they seem to significantly boost your mood. Remember to
-              acknowledge your productivity wins - they appear throughout your
-              journal as consistent sources of satisfaction.
-            </p>
-          </div>
-          <div className="flex justify-end p-4">
-            <div className="flex gap-4">
-              <button className="text-primary">Get More Insights</button>
-              <button className="text-primary">Dismiss</button>
-            </div>
-          </div>
-        </div>
+        <MonthlyMoodAnalysisCard />
+        <DashboardAnalytics />
 
-        {/* Analytics */}
-        <div className="grid grid-cols-4 gap-4 p-4 rounded-lg shadow">
-          <div className="text-center bg-pl rounded-lg p-3">
-            <h1 className="text-primary text-4xl font-medium">12</h1>
-            <p className="text-text">Entries this month</p>
-          </div>
-
-          <div className="text-center bg-pl rounded-lg p-3">
-            <h1 className="text-primary text-4xl font-medium">67%</h1>
-            <p className="text-text">Positive mood</p>
-          </div>
-
-          <div className="text-center bg-pl rounded-lg p-3">
-            <h1 className="text-primary text-4xl font-medium">8</h1>
-            <p className="text-text">Days streak</p>
-          </div>
-
-          <div className="text-center bg-pl rounded-lg p-3">
-            <h1 className="text-primary text-4xl font-medium">5</h1>
-            <p className="text-text">AI Insights</p>
-          </div>
-        </div>
-
-        <div className="flex wrap gap-6 py-4 mt-12">
+        <div className="flex gap-6 py-4 mt-12 overflow-x-scroll w-full max-lg:max-w-[790px]">
           <FilterButton>All</FilterButton>
           <FilterButton>This week</FilterButton>
           <FilterButton>Happy</FilterButton>
@@ -100,10 +53,10 @@ export default function Dashboard() {
         </div>
 
         {/* Journal entries card */}
-
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 max-2xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
           {JOURNAL_ENTRIES.map(({ title, date, mood, tags, text }) => (
             <JournalEntryCard
+              key={text}
               title={title}
               date={date}
               mood={mood}
