@@ -2,6 +2,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, element: <LandingPage /> },
-      { path: "dashboard", element: <div>Dashboard</div> },
+      { path: "dashboard", element: <Dashboard /> },
       { path: "new-entry", element: <div>New journal entry</div> },
       { path: "journal-entries/:id", element: <div>journal page</div> },
     ],
