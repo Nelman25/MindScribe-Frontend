@@ -11,3 +11,11 @@ export interface Step {
   title: string;
   description: string;
 }
+
+export interface JournalEntry {
+  title: string;
+  date: string;
+  mood: string;
+  text: string;
+  tags: string[];
+}
