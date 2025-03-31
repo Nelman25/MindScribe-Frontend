@@ -23,8 +23,11 @@ export default function JournalEntryCard({
       </div>
 
       <div className="py-4 px-2 flex gap-2 overflow-y-scroll max-h-16">
-        {tags.map((tag) => (
-          <span className="bg-pl rounded-2xl block px-3 py-1 text-primary text-sm text-nowrap">
+        {tags.map((tag, index) => (
+          <span
+            key={`${index}-${tag}`}
+            className="bg-pl rounded-2xl block px-3 py-1 text-primary text-sm text-nowrap"
+          >
             {tag}
           </span>
         ))}
