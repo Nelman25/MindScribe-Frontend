@@ -1,13 +1,63 @@
 import Footer from "../sections/Footer";
+import FormComponent from "../components/Form";
 
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoFacebook } from "react-icons/io5";
-import { FaXTwitter } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { FaGithub } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 
-import FormComponent from "../components/Form";
+import { signInWithPopup } from "firebase/auth";
+import {
+  auth,
+  facebookProvider,
+  githubProvider,
+  googleProvider,
+} from "../firebase";
+import { handleAuthError } from "../utils/authHelpers";
+import AuthProviderButton from "../components/AuthProviderButton";
+import { useState } from "react";
+import { VscLoading } from "react-icons/vsc";
 
 export default function Signup() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const handleCreateAccountWithGoogle = async (): Promise<void> => {
+    setLoading(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+      setLoading(false);
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      setLoading(false);
+      handleAuthError(error);
+    }
+  };
+
+  const handleCreateAccountWithFacebook = async (): Promise<void> => {
+    setLoading(true);
+    try {
+      await signInWithPopup(auth, facebookProvider);
+      setLoading(false);
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      setLoading(false);
+      handleAuthError(error);
+    }
+  };
+
+  const handleCreateAccountWithGithub = async (): Promise<void> => {
+    setLoading(true);
+    try {
+      await signInWithPopup(auth, githubProvider);
+      setLoading(false);
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      setLoading(false);
+      handleAuthError(error);
+    }
+  };
+
   return (
     <div className="flex flex-col w-[100%] h-screen bg-background dots to-white">
       <header className="h-[70px] sticky top-0 flex bg-white items-center px-8 border shadow">
@@ -45,15 +95,27 @@ export default function Signup() {
             </div>
 
             <div className="grid grid-cols-3 my-2 gap-4">
-              <div className="p-3 rounded-xl border bg-white hover:bg-pl hover:border-primary hover:-translate-y-[1px] transition-all duration-200">
-                <FcGoogle className="size-6 mx-auto" />
-              </div>
-              <div className="p-3 rounded-xl border bg-white hover:bg-pl hover:border-primary hover:-translate-y-[1px] transition-all duration-200">
-                <IoLogoFacebook className="size-6 text-[#1877F2] mx-auto" />
-              </div>
-              <div className="p-3 rounded-xl border bg-white hover:bg-pl hover:border-primary hover:-translate-y-[1px] transition-all duration-200">
-                <FaXTwitter className="size-6 mx-auto" />
-              </div>
+              <AuthProviderButton onClick={handleCreateAccountWithGoogle}>
+                {loading ? (
+                  <VscLoading className="size-4 animate-spin" />
+                ) : (
+                  <FcGoogle className="size-6 mx-auto" />
+                )}
+              </AuthProviderButton>
+              <AuthProviderButton onClick={handleCreateAccountWithFacebook}>
+                {loading ? (
+                  <VscLoading className="size-4 animate-spin" />
+                ) : (
+                  <IoLogoFacebook className="size-6 mx-auto text-blue-500" />
+                )}
+              </AuthProviderButton>
+              <AuthProviderButton onClick={handleCreateAccountWithGithub}>
+                {loading ? (
+                  <VscLoading className="size-4 animate-spin" />
+                ) : (
+                  <FaGithub className="size-6 mx-auto" />
+                )}
+              </AuthProviderButton>
             </div>
             <span className="text-text block text-center py-4">
               Already have an account?

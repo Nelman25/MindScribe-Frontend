@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 
 export interface Feature {
   title: string;
@@ -18,4 +18,27 @@ export interface JournalEntry {
   mood: string;
   text: string;
   tags: string[];
+}
+
+export interface MessageBubbleProps {
+  content: string;
+  title: string;
+}
+
+export interface FormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+export interface Credentials {
+  email: string;
+  password: string;
+}
+
+export interface AuthProviderButtonProps {
+  children: ReactNode;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
 }
