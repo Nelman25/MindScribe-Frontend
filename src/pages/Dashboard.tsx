@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "../components/Button";
 
 import FilterButton from "../components/FilterButton";
@@ -31,9 +32,11 @@ export default function Dashboard() {
 
         {/* Profile pic ng user */}
         <div className="flex items-center gap-4">
-          <Button type="default" className="max-lg:text-base">
-            + New Entry
-          </Button>
+          <Link to="/new-entry">
+            <Button type="default" className="max-lg:text-base">
+              + New Entry
+            </Button>
+          </Link>
           <div className="size-12 max-lg:size-10 rounded-full bg-pl border border-primary"></div>
         </div>
       </header>
