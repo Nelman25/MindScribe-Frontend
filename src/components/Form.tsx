@@ -1,8 +1,52 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikErrors } from "formik";
 import { newAccountSchema } from "../schemas";
 import Button from "./Button";
+import { FormValues } from "../types";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { VscLoading } from "react-icons/vsc";
 
 export default function FormComponent() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const handleAccountCreation = async (
+    values: FormValues,
+    {
+      setErrors,
+    }: {
+      setErrors: (errors: FormikErrors<FormValues>) => void;
+    }
+  ) => {
+    setLoading(true);
+    try {
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      const user = result.user;
+
+      await updateProfile(user, {
+        displayName: `${values.firstName} ${values.lastName}`,
+      });
+
+      setLoading(false);
+      // const token = await user.getIdToken();
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      setLoading(false);
+      let errorMessage = "Something went wrong: ";
+      if (error instanceof Error) {
+        errorMessage += error.message;
+        setErrors({ email: error.message });
+      }
+      throw new Error(errorMessage);
+    }
+  };
+
   return (
     <Formik
       initialValues={{
@@ -13,7 +57,9 @@ export default function FormComponent() {
         confirmPassword: "",
       }}
       validationSchema={newAccountSchema}
-      onSubmit={() => console.log("submitted")}
+      onSubmit={(values, { setErrors }) =>
+        handleAccountCreation(values, { setErrors })
+      }
     >
       {({ handleSubmit }) => (
         <Form onSubmit={handleSubmit}>
@@ -107,7 +153,11 @@ export default function FormComponent() {
             />
           </div>
           <Button type="default" className="w-full">
-            Create Account
+            {loading ? (
+              <VscLoading className="size-6 animate-spin" />
+            ) : (
+              "Create Account"
+            )}
           </Button>
         </Form>
       )}
