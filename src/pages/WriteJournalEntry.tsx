@@ -1,24 +1,34 @@
+import { useState } from "react";
 import AIInsight from "../components/AIInsight";
 import JournalHeader from "../components/JournalHeader";
 import MoodSelector from "../components/MoodSelector";
+import RichTextEditor from "../components/RichTextEditor";
 
 export default function WriteJournalEntry() {
+  const [content, setContent] = useState("");
+  const date = new Date();
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
   return (
     <div className="">
       <JournalHeader />
 
       <main className="px-16 py-12 max-w-[1440px] mx-auto flex gap-6">
         {/* Write journal section */}
-        <div className="w-2/3 border border-gray-200 h-full min-h-[600px] rounded-xl shadow">
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+        <div className="w-2/3 h-full min-h-[600px] rounded-xl">
+          <div className="bg-white rounded-xl shadow p-6 border border-gray-100">
             <div className="flex justify-between items-center mb-6">
               <input
                 type="text"
                 placeholder="What's on your mind today?"
                 className="text-2xl font-medium border-none focus:outline-none focus:ring-0 w-full text-gray-800 placeholder-gray-400"
               />
-              <div className="text-sm font-medium text-gray-400 bg-gray-50 px-3 py-1.5 rounded-lg min-w-[130px]">
-                March 22, 2025
+              <div className="text-sm font-medium text-gray-400 bg-gray-100 px-3 py-1.5 text-center rounded-lg min-w-[130px]">
+                {formattedDate}
               </div>
             </div>
 
@@ -43,22 +53,15 @@ export default function WriteJournalEntry() {
             </div>
           </div>
 
-          {/* Dito ilalagay yung mga Tiptap buttons */}
-          <div className="">
-            <button>1</button>
-            <button>1</button>
-            <button>1</button>
-            <button>1</button>
-            <button>1</button>
-            <button>1</button>
-            <button>1</button>
-            <button>1</button>
-          </div>
-
           {/* Actual canvas */}
-          <div>
-            <textarea name="" id=""></textarea>
-          </div>
+          <RichTextEditor
+            content={content}
+            onChange={(newContent) => setContent(newContent)}
+          />
+          {/* <div className="content-preview">
+            <h3>HTML Output:</h3>
+            <pre>{content}</pre>
+          </div> */}
         </div>
 
         {/* AI Insights */}

@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import WriteJournalEntry from "./pages/WriteJournalEntry";
 
 const router = createBrowserRouter([
   {
@@ -15,7 +16,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <LandingPage /> },
       { path: "dashboard", element: <Dashboard /> },
-      { path: "new-entry", element: <div>New journal entry</div> },
+      { path: "new-entry", element: <WriteJournalEntry /> },
       { path: "journal-entries/:id", element: <div>journal page</div> },
     ],
   },
