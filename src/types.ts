@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { Level } from "@tiptap/extension-heading";
 
 export interface Feature {
   title: string;
@@ -41,4 +42,16 @@ export interface Credentials {
 export interface AuthProviderButtonProps {
   children: ReactNode;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
+}
+
+export interface ToolbarButtonProps {
+  onClick: () => void;
+  isActive: boolean;
+  className?: string;
+  children: React.ReactNode;
+}
+
+export interface HeadingProps {
+  level: Level;
+  text: string;
 }

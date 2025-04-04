@@ -1,6 +1,9 @@
 import { Editor } from "@tiptap/react";
 import { GoListUnordered } from "react-icons/go";
 import { MdOutlineFormatListNumbered } from "react-icons/md";
+import ToolbarButton from "./ToolbarButton";
+import { HEADINGS } from "../constants/constants";
+import { HeadingProps } from "../types";
 
 export default function Menubar({ editor }: { editor: Editor }) {
   if (!editor) {
@@ -14,94 +17,49 @@ export default function Menubar({ editor }: { editor: Editor }) {
   [&_.ProseMirror_h3]:text-2xl [&_.ProseMirror_h3]:font-bold [&_.ProseMirror_h3]:my-3
 "
     >
-      <button
+      <ToolbarButton
         onClick={() => editor.chain().focus().toggleBold().run()}
-        className={`rounded-lg size-8 font-bold hover:bg-gray-200 ${
-          editor.isActive("bold") ? "bg-blue-100" : ""
-        }`}
+        isActive={editor.isActive("bold")}
+        className="font-bold"
       >
         B
-      </button>
-      <button
+      </ToolbarButton>
+      <ToolbarButton
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        className={`rounded-lg size-8 font-noto italic hover:bg-gray-200 ${
-          editor.isActive("italic") ? "bg-blue-100" : ""
-        }`}
+        isActive={editor.isActive("italic")}
+        className="font-noto italic"
       >
         I
-      </button>
-      <button
+      </ToolbarButton>
+      <ToolbarButton
         onClick={() => editor.chain().focus().toggleUnderline().run()}
-        className={`rounded-lg size-8 hover:bg-gray-200 ${
-          editor.isActive("underline") ? "bg-blue-100" : ""
-        }`}
+        isActive={editor.isActive("underline")}
       >
         <u>U</u>
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={`rounded-lg size-8 hover:bg-gray-200 ${
-          editor.isActive("heading", { level: 1 }) ? "bg-blue-100" : ""
-        }`}
-      >
-        H₁
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={`rounded-lg size-8 hover:bg-gray-200 ${
-          editor.isActive("heading", { level: 2 }) ? "bg-blue-100" : ""
-        }`}
-      >
-        H₂
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={`rounded-lg size-8 hover:bg-gray-200 ${
-          editor.isActive("heading", { level: 3 }) ? "bg-blue-100" : ""
-        }`}
-      >
-        H₃
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={`rounded-lg size-8 hover:bg-gray-200 ${
-          editor.isActive("heading", { level: 4 }) ? "bg-blue-100" : ""
-        }`}
-      >
-        H₄
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={`rounded-lg size-8 hover:bg-gray-200 ${
-          editor.isActive("heading", { level: 5 }) ? "bg-blue-100" : ""
-        }`}
-      >
-        H₅
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={`rounded-lg size-8 hover:bg-gray-200 ${
-          editor.isActive("heading", { level: 6 }) ? "bg-blue-100" : ""
-        }`}
-      >
-        H₆
-      </button>
-      <button
+      </ToolbarButton>
+
+      {HEADINGS.map(({ level, text }: HeadingProps) => (
+        <ToolbarButton
+          key={level}
+          onClick={() => editor.chain().focus().toggleHeading({ level }).run()}
+          isActive={editor.isActive("heading", { level })}
+        >
+          {text}
+        </ToolbarButton>
+      ))}
+
+      <ToolbarButton
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={`rounded-lg size-8 hover:bg-gray-200 flex justify-center items-center ${
-          editor.isActive("bulletList") ? "bg-blue-100" : ""
-        }`}
+        isActive={editor.isActive("bulletList")}
       >
         <GoListUnordered />
-      </button>
-      <button
+      </ToolbarButton>
+      <ToolbarButton
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={`rounded-lg size-8 hover:bg-gray-200 flex justify-center items-center ${
-          editor.isActive("orderedList") ? "bg-blue-100" : ""
-        }`}
+        isActive={editor.isActive("orderedList")}
       >
         <MdOutlineFormatListNumbered />
-      </button>
+      </ToolbarButton>
     </div>
   );
 }

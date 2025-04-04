@@ -58,10 +58,6 @@ export default function WriteJournalEntry() {
             content={content}
             onChange={(newContent) => setContent(newContent)}
           />
-          {/* <div className="content-preview">
-            <h3>HTML Output:</h3>
-            <pre>{content}</pre>
-          </div> */}
         </div>
 
         {/* AI Insights */}

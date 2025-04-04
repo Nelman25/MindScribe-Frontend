@@ -1,4 +1,4 @@
-import { Feature, Step } from "../types";
+import { Feature, HeadingProps, Step } from "../types";
 
 import { CiStar } from "react-icons/ci";
 import { PiBrain } from "react-icons/pi";
@@ -150,5 +150,32 @@ export const JOURNAL_ENTRIES = [
     mood: "Grateful",
     text: "Today, I reminded myself that progress is progress, no matter how small. I tackled some lingering tasks, and even though they were minor, it felt good to check them off my list...",
     tags: ["Motivation", "Gratitude", "Progress"],
+  },
+];
+
+export const HEADINGS: HeadingProps[] = [
+  {
+    level: 1,
+    text: "H₁",
+  },
+  {
+    level: 2,
+    text: "H₂",
+  },
+  {
+    level: 3,
+    text: "H₃",
+  },
+  {
+    level: 4,
+    text: "H₄",
+  },
+  {
+    level: 5,
+    text: "H₅",
+  },
+  {
+    level: 6,
+    text: "H₆",
   },
 ];
