@@ -18,7 +18,15 @@ export default function RichTextEditor({
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        history: false,
+        history: {
+          depth: 100, // number of step na tinatrack
+          newGroupDelay: 100, // Milliseconds before new undo group
+        },
+        blockquote: {
+          HTMLAttributes: {
+            class: "border-l-2 border-gray-300 pl-4 my-2",
+          },
+        },
       }),
       Underline,
       Placeholder.configure({
@@ -29,6 +37,20 @@ export default function RichTextEditor({
       }),
       Image,
     ],
+    editorProps: {
+      handleKeyDown: (_view, event) => {
+        // Custom undo/redo shortcuts
+        if (event.ctrlKey && event.key === "z") {
+          editor?.chain().focus().undo().run();
+          return true;
+        }
+        if (event.ctrlKey && event.key === "y") {
+          editor?.chain().focus().redo().run();
+          return true;
+        }
+        return false;
+      },
+    },
     content,
     onUpdate: ({ editor }) => {
       onChange(editor.getHTML());

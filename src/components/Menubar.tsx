@@ -1,6 +1,8 @@
 import { Editor } from "@tiptap/react";
 import { GoListUnordered } from "react-icons/go";
 import { MdOutlineFormatListNumbered } from "react-icons/md";
+import { FaQuoteLeft } from "react-icons/fa";
+
 import ToolbarButton from "./ToolbarButton";
 import { HEADINGS } from "../constants/constants";
 import { HeadingProps } from "../types";
@@ -11,12 +13,7 @@ export default function Menubar({ editor }: { editor: Editor }) {
   }
 
   return (
-    <div
-      className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl my-4 shadow flex gap-2 [&_.ProseMirror_h1]:text-4xl [&_.ProseMirror_h1]:font-bold [&_.ProseMirror_h1]:my-4
-  [&_.ProseMirror_h2]:text-3xl [&_.ProseMirror_h2]:font-bold [&_.ProseMirror_h2]:my-4
-  [&_.ProseMirror_h3]:text-2xl [&_.ProseMirror_h3]:font-bold [&_.ProseMirror_h3]:my-3
-"
-    >
+    <div className="w-full px-4 py-2 bg-gray-50 border border-gray-100 rounded-xl my-4 shadow flex gap-2">
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleBold().run()}
         isActive={editor.isActive("bold")}
@@ -59,6 +56,12 @@ export default function Menubar({ editor }: { editor: Editor }) {
         isActive={editor.isActive("orderedList")}
       >
         <MdOutlineFormatListNumbered />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        isActive={editor.isActive("blockquote")}
+      >
+        <FaQuoteLeft className="size-3" />
       </ToolbarButton>
     </div>
   );
