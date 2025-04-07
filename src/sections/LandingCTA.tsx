@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "../components/Button";
 
 export default function LandingCTA() {
@@ -11,7 +12,9 @@ export default function LandingCTA() {
         insights with our AI-powered journal that helps you understand yourself
         better.
       </p>
-      <Button type="default">Create Your Free Journal</Button>
+      <Link to="/login">
+        <Button type="default">Create Your Free Journal</Button>
+      </Link>
     </section>
   );
 }

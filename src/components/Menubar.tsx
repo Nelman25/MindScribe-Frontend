@@ -7,7 +7,7 @@ import ToolbarButton from "./ToolbarButton";
 import { HEADINGS } from "../constants/constants";
 import { HeadingProps } from "../types";
 
-export default function Menubar({ editor }: { editor: Editor }) {
+export default function Menubar({ editor }: { editor: Editor | null }) {
   if (!editor) {
     return null;
   }

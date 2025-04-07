@@ -8,6 +8,14 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { VscLoading } from "react-icons/vsc";
 
+const initialValues: FormValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 export default function FormComponent() {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -49,13 +57,7 @@ export default function FormComponent() {
 
   return (
     <Formik
-      initialValues={{
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      }}
+      initialValues={initialValues}
       validationSchema={newAccountSchema}
       onSubmit={(values, { setErrors }) =>
         handleAccountCreation(values, { setErrors })
@@ -152,7 +154,7 @@ export default function FormComponent() {
               className="text-red-500 text-sm"
             />
           </div>
-          <Button type="default" className="w-full">
+          <Button variant="default" className="w-full">
             {loading ? (
               <VscLoading className="size-6 animate-spin" />
             ) : (

@@ -19,7 +19,7 @@ export default function JournalHeader() {
       </ul>
 
       <div className="flex items-center gap-4">
-        <Button type="default" className="max-lg:text-base">
+        <Button variant="default" className="max-lg:text-base">
           Save Entry
         </Button>
       </div>

@@ -59,7 +59,6 @@ export default function Login() {
         errorMessage += String(error.message);
       }
       setErrors(errorMessage);
-      // handleAuthError(error);
     }
   };
 
@@ -161,7 +160,8 @@ export default function Login() {
 
             <Button
               onClick={handleLogin}
-              type="default"
+              variant="default"
+              htmlType="submit"
               className="w-full flex justify-center"
             >
               {loading ? (
@@ -178,26 +178,23 @@ export default function Login() {
             </div>
 
             <div className="grid grid-cols-3 my-2 gap-4">
-              <AuthProviderButton onClick={handleSignInWithGoogle}>
-                {loading ? (
-                  <VscLoading className="size-4 animate-spin" />
-                ) : (
-                  <FcGoogle className="size-6 mx-auto" />
-                )}
+              <AuthProviderButton
+                isLoading={loading}
+                onClick={handleSignInWithGoogle}
+              >
+                <FcGoogle className="size-6 mx-auto" />
               </AuthProviderButton>
-              <AuthProviderButton onClick={handleSignInWithFacebook}>
-                {loading ? (
-                  <VscLoading className="size-4 animate-spin" />
-                ) : (
-                  <IoLogoFacebook className="size-6 text-blue-500 mx-auto" />
-                )}
+              <AuthProviderButton
+                isLoading={loading}
+                onClick={handleSignInWithFacebook}
+              >
+                <IoLogoFacebook className="size-6 text-blue-500 mx-auto" />
               </AuthProviderButton>
-              <AuthProviderButton onClick={handleSignInWithGithub}>
-                {loading ? (
-                  <VscLoading className="size-4 animate-spin" />
-                ) : (
-                  <FaGithub className="size-6 mx-auto" />
-                )}
+              <AuthProviderButton
+                isLoading={loading}
+                onClick={handleSignInWithGithub}
+              >
+                <FaGithub className="size-6 mx-auto" />
               </AuthProviderButton>
             </div>
             <span className="text-text block text-center py-4">

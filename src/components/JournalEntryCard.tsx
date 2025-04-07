@@ -8,21 +8,26 @@ export default function JournalEntryCard({
   tags,
 }: JournalEntry) {
   return (
-    <div className="bg-white rounded-lg shadow border border-gray-50 hover:border-primary transition-all duration-200">
-      <div className="border-b py-4 px-3">
+    <article className="bg-white rounded-lg shadow border border-gray-50 hover:border-primary transition-all duration-200">
+      <header className="border-b py-4 px-3">
         <h1 className="text-xl font-medium">{title}</h1>
         <div className="flex justify-between items-center max-">
-          <span className="text-text text-sm">{date}</span>
+          <time
+            className="text-gray-600 text-sm"
+            dateTime={new Date(date).toISOString()}
+          >
+            {date}
+          </time>
           <span className="bg-pl rounded-2xl px-3 py-1 text-primary text-sm">
             {mood}
           </span>
         </div>
-      </div>
+      </header>
       <div className="py-4 px-3 border-b max-h-[150px] overflow-hidden">
         <p className="text-text-light line-clamp-2">{text}</p>
       </div>
 
-      <div className="py-4 px-2 flex gap-2 overflow-y-scroll max-h-16">
+      <footer className="py-4 px-2 flex gap-2 overflow-y-scroll max-h-16">
         {tags.map((tag, index) => (
           <span
             key={`${index}-${tag}`}
@@ -31,7 +36,7 @@ export default function JournalEntryCard({
             {tag}
           </span>
         ))}
-      </div>
-    </div>
+      </footer>
+    </article>
   );
 }
