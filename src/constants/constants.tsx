@@ -1,4 +1,4 @@
-import { Feature, HeadingProps, Step } from "../types";
+import { Feature, HeadingProps, JournalEntry, Step } from "../types";
 
 import { CiStar } from "react-icons/ci";
 import { PiBrain } from "react-icons/pi";
@@ -73,7 +73,7 @@ export const STEPS: Step[] = [
   },
 ];
 
-export const JOURNAL_ENTRIES = [
+export const JOURNAL_ENTRIES: JournalEntry[] = [
   {
     title: "Productive day and outdoor walk",
     date: "March 19, 2025",

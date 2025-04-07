@@ -1,11 +1,21 @@
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
 
 import FilterButton from "../components/FilterButton";
+import Button from "../components/Button";
 import JournalEntryCard from "../components/JournalEntryCard";
-import { JOURNAL_ENTRIES } from "../constants/constants";
 import DashboardAnalytics from "../sections/DashboardAnalytics";
 import MonthlyMoodAnalysisCard from "../sections/MonthlyMoodAnalysisCard";
+import { JOURNAL_ENTRIES } from "../constants/constants";
+
+const NAV_ITEMS = ["Dashboard", "Insights", "Archive", "Settings"];
+const JOURNAL_FILTERS = [
+  "All",
+  "This week",
+  "Happy",
+  "Neutral",
+  "Sad",
+  "With AI Insights",
+];
 
 export default function Dashboard() {
   return (
@@ -15,29 +25,28 @@ export default function Dashboard() {
           MindScribe
         </h2>
 
-        <ul className="flex gap-4 justify-between items-center text-xl max-lg:text-base max-md:hidden max-w-[400px] w-full">
-          <li className="hover:text-primary transition-all duration-300">
-            Dashboard
-          </li>
-          <li className="hover:text-primary transition-all duration-300">
-            Insights
-          </li>
-          <li className="hover:text-primary transition-all duration-300">
-            Archive
-          </li>
-          <li className="hover:text-primary transition-all duration-300">
-            Settings
-          </li>
-        </ul>
+        <nav>
+          <ul className="flex gap-4 justify-between items-center text-xl max-lg:text-base max-md:hidden max-w-[400px] w-full">
+            {NAV_ITEMS.map((item) => (
+              <Link key={item} to={`/${item}`}>
+                <li className="hover:text-primary transition-all duration-300">
+                  {item}
+                </li>
+              </Link>
+            ))}
+          </ul>
+        </nav>
 
         {/* Profile pic ng user */}
         <div className="flex items-center gap-4">
           <Link to="/new-entry">
-            <Button type="default" className="max-lg:text-base">
+            <Button variant="default" className="max-lg:text-base">
               + New Entry
             </Button>
           </Link>
-          <div className="size-12 max-lg:size-10 rounded-full bg-pl border border-primary"></div>
+          <div className="size-12 max-lg:size-10 rounded-full bg-pl border border-primary">
+            <img src="" alt="profile picture" />
+          </div>
         </div>
       </header>
 
@@ -47,12 +56,9 @@ export default function Dashboard() {
         <DashboardAnalytics />
 
         <div className="flex gap-6 py-4 mt-12 overflow-x-scroll w-full max-lg:max-w-[790px]">
-          <FilterButton>All</FilterButton>
-          <FilterButton>This week</FilterButton>
-          <FilterButton>Happy</FilterButton>
-          <FilterButton>Neutral</FilterButton>
-          <FilterButton>Sad</FilterButton>
-          <FilterButton>With AI Insights</FilterButton>
+          {JOURNAL_FILTERS.map((item) => (
+            <FilterButton key={item}>{item}</FilterButton>
+          ))}
         </div>
 
         {/* Journal entries card */}

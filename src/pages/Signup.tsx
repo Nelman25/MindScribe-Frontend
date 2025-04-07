@@ -16,7 +16,6 @@ import {
 import { handleAuthError } from "../utils/authHelpers";
 import AuthProviderButton from "../components/AuthProviderButton";
 import { useState } from "react";
-import { VscLoading } from "react-icons/vsc";
 
 export default function Signup() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -95,26 +94,23 @@ export default function Signup() {
             </div>
 
             <div className="grid grid-cols-3 my-2 gap-4">
-              <AuthProviderButton onClick={handleCreateAccountWithGoogle}>
-                {loading ? (
-                  <VscLoading className="size-4 animate-spin" />
-                ) : (
-                  <FcGoogle className="size-6 mx-auto" />
-                )}
+              <AuthProviderButton
+                isLoading={loading}
+                onClick={handleCreateAccountWithGoogle}
+              >
+                <FcGoogle className="size-6 mx-auto" />
               </AuthProviderButton>
-              <AuthProviderButton onClick={handleCreateAccountWithFacebook}>
-                {loading ? (
-                  <VscLoading className="size-4 animate-spin" />
-                ) : (
-                  <IoLogoFacebook className="size-6 mx-auto text-blue-500" />
-                )}
+              <AuthProviderButton
+                isLoading={loading}
+                onClick={handleCreateAccountWithFacebook}
+              >
+                <IoLogoFacebook className="size-6 mx-auto text-blue-500" />
               </AuthProviderButton>
-              <AuthProviderButton onClick={handleCreateAccountWithGithub}>
-                {loading ? (
-                  <VscLoading className="size-4 animate-spin" />
-                ) : (
-                  <FaGithub className="size-6 mx-auto" />
-                )}
+              <AuthProviderButton
+                isLoading={loading}
+                onClick={handleCreateAccountWithGithub}
+              >
+                <FaGithub className="size-6 mx-auto" />
               </AuthProviderButton>
             </div>
             <span className="text-text block text-center py-4">

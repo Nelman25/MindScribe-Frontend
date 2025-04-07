@@ -1,5 +1,5 @@
 import { FaRobot } from "react-icons/fa";
-import { IoReload } from "react-icons/io5";
+import { IoBulbOutline, IoReload } from "react-icons/io5";
 
 import MessageBubble from "../components/MessageBubble";
 import InsightFocus from "./InsightFocus";
@@ -29,10 +29,12 @@ export default function AIInsight() {
         <MessageBubble
           title="Welcome to your journal"
           content="As you write, I'll analyze your entries and provide insights about your mood, patterns, and suggestions that might help you reflect more deeply."
+          icon={<IoBulbOutline className="text-white text-xl" />}
         />
         <MessageBubble
           title="Pattern Observed"
           content="I notice you've mentioned feeling 'productive' frequently in your recent entries. Productivity seems to be a key value for you right now. Consider reflecting: What does being productive mean to you, and how does it relate to your overall sense of purpose?"
+          icon={<IoBulbOutline className="text-white text-xl" />}
         />
         <button className="block bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 px-4 rounded-xl mx-auto my-4">
           Generate Insights

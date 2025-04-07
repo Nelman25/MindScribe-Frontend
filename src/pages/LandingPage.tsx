@@ -16,17 +16,11 @@ export default function LandingPage() {
           MindScribe
         </h2>
 
-        <div className="text-xl max-lg:text-base text-text flex justify-around max-w-[300px] w-full max-md:hidden">
-          <p>Features</p>
-          <p>How it works</p>
-          <p>FAQ</p>
-        </div>
-
         <div className="flex gap-4 items-center max-sm:hidden">
-          <Button type="default" onClick={() => navigate("/login")}>
+          <Button variant="default" onClick={() => navigate("/login")}>
             Login
           </Button>
-          <Button type="outline" onClick={() => navigate("/signup")}>
+          <Button variant="outline" onClick={() => navigate("/signup")}>
             Sign up for free
           </Button>
         </div>
