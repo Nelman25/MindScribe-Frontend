@@ -6,7 +6,7 @@ import InsightFocus from "./InsightFocus";
 
 export default function AIInsight() {
   return (
-    <div className="w-1/3 border border-slate-200 h-full min-h-[800px] max-h-[600px] overflow-hidden rounded-xl shadow flex flex-col">
+    <div className="w-1/3 border border-slate-200 h-[850px] max-h-[850px] overflow-hidden rounded-xl shadow flex flex-col">
       <div className="p-6 bg-blue-50 flex border-b border-slate-200">
         <div className="flex gap-3">
           <div className="bg-blue-500 size-12 flex justify-center items-center rounded-xl">
@@ -25,7 +25,7 @@ export default function AIInsight() {
       </div>
 
       {/* Chat body */}
-      <div className="p-6 overflow-scroll max-h-[600px]">
+      <div className="p-6 overflow-scroll no-scrollbar h-[700px]">
         <MessageBubble
           title="Welcome to your journal"
           content="As you write, I'll analyze your entries and provide insights about your mood, patterns, and suggestions that might help you reflect more deeply."

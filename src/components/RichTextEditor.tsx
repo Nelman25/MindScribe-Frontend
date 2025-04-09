@@ -39,7 +39,6 @@ export default function RichTextEditor({
     ],
     editorProps: {
       handleKeyDown: (_view, event) => {
-        // Custom undo/redo shortcuts
         if (event.ctrlKey && event.key === "z") {
           editor?.chain().focus().undo().run();
           return true;
@@ -53,8 +52,7 @@ export default function RichTextEditor({
     },
     content,
     onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
-      console.log(editor.getHTML());
+      onChange(editor.getText());
     },
   });
 
@@ -63,15 +61,13 @@ export default function RichTextEditor({
   }
 
   return (
-    <div>
+    <div className="flex flex-col flex-1">
       {editor && <Menubar editor={editor} />}
 
-      <div className="">
-        <EditorContent
-          className="bg-white shadow rounded-xl p-4 h-[500px] max-h-[500px] overflow-y-scroll border border-slate-100"
-          editor={editor}
-        />
-      </div>
+      <EditorContent
+        className="bg-white no-scrollbar shadow rounded-xl p-4 flex-1 overflow-y-scroll border border-slate-100"
+        editor={editor}
+      />
     </div>
   );
 }
