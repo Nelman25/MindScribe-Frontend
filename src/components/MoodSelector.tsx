@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Mood } from "../types";
 
 const MOOD: Mood[] = [
@@ -9,9 +8,15 @@ const MOOD: Mood[] = [
   { emoji: "😤", label: "Frustrated", value: "frustrated" },
 ];
 
-export default function MoodSelector() {
-  const [selectedMood, setSelectedMood] = useState<Mood | null>(null);
+interface MoodSelectorProps {
+  selectedMood?: Mood | null;
+  setSelectedMood: React.Dispatch<React.SetStateAction<Mood | null>>;
+}
 
+export default function MoodSelector({
+  selectedMood,
+  setSelectedMood,
+}: MoodSelectorProps) {
   return (
     <div className="flex flex-wrap items-center gap-4 mb-6">
       <span className="text-xl font-medium text-gray-700">Mood:</span>

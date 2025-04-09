@@ -1,56 +1,118 @@
-import { useState } from "react";
+import { useCreateJournalEntry } from "../hooks/useCreateJournalEntry";
 import AIInsight from "../components/AIInsight";
 import JournalHeader from "../components/JournalHeader";
 import MoodSelector from "../components/MoodSelector";
 import RichTextEditor from "../components/RichTextEditor";
+import { JOURNAL_TAGS } from "../constants/constants";
+import { useState } from "react";
+import { JournalEntry, Tag } from "../types";
+import { useJournalStore } from "../stores/useJournalStore";
 
 export default function WriteJournalEntry() {
-  const [content, setContent] = useState("");
+  const {
+    title,
+    setTitle,
+    content,
+    setContent,
+    selectedMood,
+    setSelectedMood,
+    addTag,
+    removeTag,
+    tags,
+  } = useCreateJournalEntry();
+  const [tagsChoices, setTagsChoices] = useState<Tag[]>(JOURNAL_TAGS);
+  const setEntry = useJournalStore((state) => state.setEntry);
+  const entries = useJournalStore((state) => state.entries);
   const date = new Date();
-  const formattedDate = date.toLocaleDateString("en-US", {
+  const formattedDate = date?.toLocaleDateString("en-US", {
     month: "long",
     day: "numeric",
     year: "numeric",
   });
 
+  const handleTagSelect = (tag: Tag) => {
+    addTag(tag);
+    setTagsChoices((prevTags) => prevTags.filter((t) => t.name !== tag.name));
+  };
+
+  const handleRemoveTag = (tag: Tag) => {
+    removeTag(tag);
+    setTagsChoices([...tagsChoices, tag]);
+  };
+
+  const handleSaveToStore = () => {
+    const entry: JournalEntry = {
+      title,
+      id: crypto.randomUUID(),
+      date: formattedDate,
+      content,
+      mood: selectedMood,
+      tags,
+    };
+
+    setEntry(entry);
+  };
+
+  console.log(entries);
+
   return (
-    <div className="">
+    <>
       <JournalHeader />
 
       <main className="px-16 py-12 max-w-[1440px] mx-auto flex gap-6">
         {/* Write journal section */}
-        <div className="w-2/3 h-full min-h-[600px] rounded-xl">
+        <div className="w-2/3 flex flex-col h-[850px] max-h-[850px] rounded-xl">
           <div className="bg-white rounded-xl shadow p-6 border border-gray-100">
             <div className="flex justify-between items-center mb-6">
               <input
                 type="text"
                 placeholder="What's on your mind today?"
                 className="text-2xl font-medium border-none focus:outline-none focus:ring-0 w-full text-gray-800 placeholder-gray-400"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
               <div className="text-sm font-medium text-gray-400 bg-gray-100 px-3 py-1.5 text-center rounded-lg min-w-[130px]">
                 {formattedDate}
               </div>
             </div>
 
-            <MoodSelector />
+            <MoodSelector
+              selectedMood={selectedMood}
+              setSelectedMood={setSelectedMood}
+            />
+            {/* SELECTED TAGS */}
+            {tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span>Tags:</span>
+                {tags.map((tag) => (
+                  <button
+                    key={tag.name}
+                    className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
+                    style={{ color: tag.fontColor, backgroundColor: tag.color }}
+                    onClick={() => handleRemoveTag(tag)}
+                  >
+                    {tag.name}
+                  </button>
+                ))}
+              </div>
+            )}
 
-            <div className="flex flex-wrap gap-2 mb-2">
-              <div className="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full text-sm font-medium flex items-center">
-                Work
-                <button className="ml-1.5 text-blue-400 hover:text-blue-600">
-                  ×
-                </button>
+            {/* TAGS CHOICES */}
+            {tagsChoices.length !== 0 && (
+              <div className="flex flex-wrap gap-2 mb-2">
+                <span>Select tags that best describe your journal entry:</span>
+                {tagsChoices.map((tag) => (
+                  <button
+                    key={tag.name}
+                    className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
+                    style={{ color: tag.fontColor, backgroundColor: tag.color }}
+                    onClick={() => handleTagSelect(tag)}
+                  >
+                    {tag.name}
+                  </button>
+                ))}
               </div>
-              <div className="bg-green-50 text-green-600 px-3 py-1.5 rounded-full text-sm font-medium flex items-center">
-                Outdoors
-                <button className="ml-1.5 text-green-400 hover:text-green-600">
-                  ×
-                </button>
-              </div>
-              <button className="text-gray-400 hover:text-gray-600 text-sm font-medium px-3 py-1.5 rounded-full border border-gray-200 hover:border-gray-300 transition-colors duration-200">
-                + Add tag
-              </button>
-            </div>
+            )}
           </div>
 
           {/* Actual canvas */}
@@ -58,11 +120,22 @@ export default function WriteJournalEntry() {
             content={content}
             onChange={(newContent) => setContent(newContent)}
           />
+          <div className="flex justify-end gap-4 my-2">
+            <button className="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl shadow">
+              Cancel
+            </button>
+            <button
+              onClick={handleSaveToStore}
+              className="bg-blue-500 text-white px-4 py-2 rounded-xl shadow"
+            >
+              Save
+            </button>
+          </div>
         </div>
 
         {/* AI Insights */}
         <AIInsight />
       </main>
-    </div>
+    </>
   );
 }

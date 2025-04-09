@@ -5,7 +5,7 @@ import Button from "../components/Button";
 import JournalEntryCard from "../components/JournalEntryCard";
 import DashboardAnalytics from "../sections/DashboardAnalytics";
 import MonthlyMoodAnalysisCard from "../sections/MonthlyMoodAnalysisCard";
-import { JOURNAL_ENTRIES } from "../constants/constants";
+import { useJournalStore } from "../stores/useJournalStore";
 
 const NAV_ITEMS = ["Dashboard", "Insights", "Archive", "Settings"];
 const JOURNAL_FILTERS = [
@@ -18,6 +18,10 @@ const JOURNAL_FILTERS = [
 ];
 
 export default function Dashboard() {
+  const entries = useJournalStore((state) => state.entries);
+
+  console.log(entries);
+
   return (
     <div className="bg-background h-full">
       <header className="h-[70px] flex items-center justify-between px-8 sticky top-0 border backdrop-blur-xl shadow z-20">
@@ -55,7 +59,7 @@ export default function Dashboard() {
         <MonthlyMoodAnalysisCard />
         <DashboardAnalytics />
 
-        <div className="flex gap-6 py-4 mt-12 overflow-x-scroll w-full max-lg:max-w-[790px]">
+        <div className="flex gap-6 py-4 mt-12 overflow-x-scroll no-scrollbar w-full max-lg:max-w-[790px]">
           {JOURNAL_FILTERS.map((item) => (
             <FilterButton key={item}>{item}</FilterButton>
           ))}
@@ -63,14 +67,15 @@ export default function Dashboard() {
 
         {/* Journal entries card */}
         <div className="grid grid-cols-3 max-2xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
-          {JOURNAL_ENTRIES.map(({ title, date, mood, tags, text }) => (
+          {entries.map(({ title, id, date, mood, tags, content }) => (
             <JournalEntryCard
-              key={text}
+              key={id}
+              id={id}
               title={title}
               date={date}
               mood={mood}
               tags={tags}
-              text={text}
+              content={content}
             />
           ))}
         </div>
