@@ -1,15 +1,15 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import JournalHeader from "../components/JournalHeader";
 import { useJournalStore } from "../stores/useJournalStore";
 import { JournalEntry } from "../types";
 import AIInsight from "../components/AIInsightChatbox";
+import { useCreateJournalEntry } from "../hooks/useCreateJournalEntry";
 
 export default function ViewJournalEntry() {
-  const { id } = useParams();
-  const entries = useJournalStore<JournalEntry[]>((state) => state.entries);
-  const selectedEntry = entries.find((e) => e.id === id);
-
-  console.log(selectedEntry);
+  const { setInsightsState } = useCreateJournalEntry(); // kinuha ko to para lang mawala yung error kasi required yung setInsights props ni <AIInsight />. Fix ko later
+  const selectedEntry = useJournalStore<JournalEntry>(
+    (state) => state.selectedEntry
+  );
 
   return (
     <div>
@@ -54,7 +54,7 @@ export default function ViewJournalEntry() {
           <div className="flex justify-end gap-4">
             <Link to="/dashboard">
               <button className="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-xl shadow">
-                Cancel
+                Back
               </button>
             </Link>
             <button className="bg-blue-500 text-white px-4 py-2 rounded-xl shadow">
@@ -64,7 +64,11 @@ export default function ViewJournalEntry() {
         </div>
 
         {/* View AI Insights */}
-        <AIInsight isViewing={true} />
+        <AIInsight
+          isViewing={true}
+          AIInsights={selectedEntry.aiInsight}
+          setInsights={setInsightsState}
+        />
       </main>
     </div>
   );

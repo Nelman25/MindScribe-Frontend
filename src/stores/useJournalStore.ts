@@ -4,7 +4,8 @@ import { persist } from "zustand/middleware";
 
 interface JournalStoreState {
   entries: JournalEntry[];
-  currentEntry: JournalEntry;
+  selectedEntry: JournalEntry;
+  setSelectedEntry: (entry: JournalEntry) => void;
   monthlyMoodAnalysis: string | null;
   setEntry: (entry: JournalEntry) => void;
   setMonthlyMoodAnalysis: (text: string) => void;
@@ -12,10 +13,10 @@ interface JournalStoreState {
 
 export const useJournalStore = create<JournalStoreState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       entries: [],
       monthlyMoodAnalysis: null,
-      currentEntry: {
+      selectedEntry: {
         title: null,
         id: null,
         date: null,
@@ -33,9 +34,12 @@ export const useJournalStore = create<JournalStoreState>()(
           entries: [...state.entries, entry],
         })),
 
+      setSelectedEntry: (entry) => set(() => ({ selectedEntry: entry })),
+      
       setMonthlyMoodAnalysis: (analysis) =>
         set(() => ({ monthlyMoodAnalysis: analysis })),
     }),
+
     {
       name: "journal-storage",
     }

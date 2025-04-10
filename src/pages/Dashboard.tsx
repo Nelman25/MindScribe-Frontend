@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import FilterButton from "../components/FilterButton";
 import Button from "../components/Button";
@@ -19,6 +19,16 @@ const JOURNAL_FILTERS = [
 
 export default function Dashboard() {
   const entries = useJournalStore((state) => state.entries);
+  const setSelectedEntry = useJournalStore((state) => state.setSelectedEntry);
+  const navigate = useNavigate();
+
+  const handleSelectEntry = (id: string | null) => {
+    const selectedEntry = entries.find((e) => e.id === id);
+    if (selectedEntry) {
+      setSelectedEntry(selectedEntry);
+      navigate(`/view-entry/${id}`);
+    }
+  };
 
   return (
     <div className="bg-white h-screen">
@@ -77,7 +87,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-3 max-2xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
             {entries.map(
               ({ title, id, date, mood, tags, content, contentInHTML }) => (
-                <Link key={id} to={`/view-entry/${id}`}>
+                <button key={id} onClick={() => handleSelectEntry(id)}>
                   <JournalEntryCard
                     id={id}
                     title={title}
@@ -87,7 +97,7 @@ export default function Dashboard() {
                     content={content}
                     contentInHTML={contentInHTML}
                   />
-                </Link>
+                </button>
               )
             )}
           </div>
