@@ -1,4 +1,4 @@
-import { Feature, HeadingProps, Step, Tag } from "../types";
+import { AIInsight, Feature, HeadingProps, Step, Tag } from "../types";
 
 import { CiStar } from "react-icons/ci";
 import { PiBrain } from "react-icons/pi";
@@ -201,4 +201,77 @@ export const JOURNAL_TAGS: Tag[] = [
   { name: "Accomplishments", color: "#FFEDD5", fontColor: "#C2410C" }, // bg-orange-100, text-orange-700
   { name: "Self-Care", color: "#DDF4FF", fontColor: "#0369A1" }, // bg-sky-100, text-sky-700
   { name: "Ideas", color: "#E9D5FF", fontColor: "#6D28D9" }, // bg-purple-100, text-purple-700
+];
+
+export const insights: AIInsight[] = [
+  {
+    id: "1",
+    title: "Great start to the day",
+    message:
+      "You’ve made a solid start today by tackling your tasks early on. The morning momentum is powerful, and keeping that energy throughout the day will help you stay focused and productive. Remember to take short breaks to avoid burnout.",
+    timeStamp: new Date("2025-04-10T10:00:00Z"),
+  },
+  {
+    id: "2",
+    title: "Mindfulness tip",
+    message:
+      "Throughout your day, try to take small moments to practice mindfulness. Even a few minutes of deep breathing or being present in the moment can help clear mental clutter. You might find that it brings more clarity and calmness to your thoughts.",
+    timeStamp: new Date("2025-04-10T11:00:00Z"),
+  },
+  {
+    id: "3",
+    title: "Keep learning from mistakes",
+    message:
+      "Mistakes are not failures; they are opportunities to learn and grow. When you encounter a challenge, take a moment to reflect on what went wrong. What can you do differently next time? Mistakes help you build resilience and better decision-making skills.",
+    timeStamp: new Date("2025-04-10T12:00:00Z"),
+  },
+  {
+    id: "4",
+    title: "Check-in with your emotions",
+    message:
+      "Sometimes, we get so caught up in tasks that we forget to check in with our emotions. Take a few minutes today to assess how you’re feeling. Are there any lingering emotions you need to acknowledge? Understanding your emotional state helps you make decisions that align with your well-being.",
+    timeStamp: new Date("2025-04-10T13:00:00Z"),
+  },
+  {
+    id: "5",
+    title: "Gratitude practice",
+    message:
+      "Gratitude is a powerful tool to shift your perspective. Take a moment to reflect on the things you’re thankful for today, no matter how small they seem. Whether it’s a pleasant conversation, a beautiful sunset, or even a warm cup of coffee, recognizing these moments can help improve your mood and outlook on life.",
+    timeStamp: new Date("2025-04-10T14:00:00Z"),
+  },
+  {
+    id: "6",
+    title: "Focus on balance",
+    message:
+      "It’s easy to get caught up in the hustle of productivity, but remember that balance is key. While achieving goals is important, so is maintaining your physical and mental health. Try to allocate time for self-care, hobbies, and relaxation. A well-rounded routine promotes long-term success and happiness.",
+    timeStamp: new Date("2025-04-10T15:00:00Z"),
+  },
+  {
+    id: "7",
+    title: "Don’t let self-doubt take over",
+    message:
+      "Self-doubt is a common feeling, but it doesn’t define you. When those thoughts creep in, take a step back and remind yourself of past successes. You are capable, and you’ve overcome challenges before. Trust in your abilities and keep pushing forward, even when things seem uncertain.",
+    timeStamp: new Date("2025-04-10T16:00:00Z"),
+  },
+  {
+    id: "8",
+    title: "Celebrate the small wins",
+    message:
+      "It’s easy to overlook small victories when you’re focused on big goals, but those little wins add up over time. Whether it’s finishing a task ahead of schedule or staying positive throughout the day, take a moment to acknowledge your efforts. Celebrating small wins can boost motivation and reinforce positive habits.",
+    timeStamp: new Date("2025-04-10T17:00:00Z"),
+  },
+  {
+    id: "9",
+    title: "Reflection on growth",
+    message:
+      "Growth isn’t always linear, but it’s important to look back and see how far you’ve come. Reflect on the challenges you’ve faced and the lessons you’ve learned. Even setbacks are part of the growth process. Take pride in your resilience and the progress you’ve made, and use that to fuel your future endeavors.",
+    timeStamp: new Date("2025-04-10T18:00:00Z"),
+  },
+  {
+    id: "10",
+    title: "End of the day reflection",
+    message:
+      "As the day comes to a close, take a moment to reflect on what you accomplished. Think about the challenges you faced, the lessons you learned, and the moments you can be proud of. Tomorrow is a new day, but it’s important to rest and recharge tonight. Be kind to yourself for the efforts you’ve put in today.",
+    timeStamp: new Date("2025-04-10T19:00:00Z"),
+  },
 ];

@@ -87,6 +87,7 @@ export default function WriteJournalEntry() {
       contentInHTML: contentHTML,
       mood: selectedMood,
       tags,
+      aiInsight: insightsState,
     };
 
     setEntry(entry);
@@ -177,10 +178,11 @@ export default function WriteJournalEntry() {
         {/* AI Insights */}
         <AIInsightChatbox
           AIInsights={insightsState}
+          setInsights={setInsightsState}
           // unsure pa sa implementation, will check later
-          onUpdateAIInsights={(insightsState) =>
-            setInsightsState((prev) => [...(prev ?? []), insightsState])
-          }
+          // onUpdateAIInsights={(insightsState) =>
+          //   setInsightsState((prev) => [...(prev ?? []), insightsState])
+          // }
         />
       </main>
 

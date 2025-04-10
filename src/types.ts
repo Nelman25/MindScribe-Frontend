@@ -21,7 +21,7 @@ export interface JournalEntry {
   content: string | null;
   contentInHTML: string | null;
   tags: Tag[] | null;
-  aiInsight?: string | null;
+  aiInsight?: AIInsight[] | null;
 }
 
 export interface MessageBubbleProps {
@@ -100,4 +100,5 @@ export interface AIInsight {
   id: string;
   title: string;
   message: string;
+  timeStamp?: Date;
 }
