@@ -20,10 +20,8 @@ const JOURNAL_FILTERS = [
 export default function Dashboard() {
   const entries = useJournalStore((state) => state.entries);
 
-  console.log(entries);
-
   return (
-    <div className="bg-background h-full">
+    <div className="bg-white h-screen">
       <header className="h-[70px] flex items-center justify-between px-8 sticky top-0 border backdrop-blur-xl shadow z-20">
         <h2 className="text-3xl max-lg:text-xl text-primary font-bold">
           MindScribe
@@ -66,19 +64,34 @@ export default function Dashboard() {
         </div>
 
         {/* Journal entries card */}
-        <div className="grid grid-cols-3 max-2xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
-          {entries.map(({ title, id, date, mood, tags, content }) => (
-            <JournalEntryCard
-              key={id}
-              id={id}
-              title={title}
-              date={date}
-              mood={mood}
-              tags={tags}
-              content={content}
-            />
-          ))}
-        </div>
+
+        {entries.length === 0 && (
+          <div className="flex w-full h-[200px] items-center justify-center">
+            <p className="text-center text-xl text-text">
+              You don't have any entries yet, start writing now!
+            </p>
+          </div>
+        )}
+
+        {entries.length !== 0 && (
+          <div className="grid grid-cols-3 max-2xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
+            {entries.map(
+              ({ title, id, date, mood, tags, content, contentInHTML }) => (
+                <Link key={id} to={`/view-entry/${id}`}>
+                  <JournalEntryCard
+                    id={id}
+                    title={title}
+                    date={date}
+                    mood={mood}
+                    tags={tags}
+                    content={content}
+                    contentInHTML={contentInHTML}
+                  />
+                </Link>
+              )
+            )}
+          </div>
+        )}
       </main>
     </div>
   );
