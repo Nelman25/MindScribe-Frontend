@@ -64,7 +64,7 @@ export default function RichTextEditor({
   }
 
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col flex-1 max-h-[550px] overflow-y-scroll no-scrollbar">
       {editor && <Menubar editor={editor} />}
 
       <EditorContent

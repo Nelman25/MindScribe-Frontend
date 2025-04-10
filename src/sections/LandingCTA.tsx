@@ -13,7 +13,7 @@ export default function LandingCTA() {
         better.
       </p>
       <Link to="/login">
-        <Button type="default">Create Your Free Journal</Button>
+        <Button variant="default">Create Your Free Journal</Button>
       </Link>
     </section>
   );
