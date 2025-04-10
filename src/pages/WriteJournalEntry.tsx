@@ -7,8 +7,9 @@ import MoodSelector from "../components/MoodSelector";
 import RichTextEditor from "../components/RichTextEditor";
 import { JOURNAL_TAGS } from "../constants/constants";
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 
 import { JournalEntry, Tag } from "../types";
 
@@ -29,6 +30,19 @@ export default function WriteJournalEntry() {
     tags,
   } = useCreateJournalEntry();
   const [tagsChoices, setTagsChoices] = useState<Tag[]>(JOURNAL_TAGS);
+  const [error, setError] = useState<string | null>(null);
+
+  // effect for displaying error popup
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(null);
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
   const setEntry = useJournalStore((state) => state.setEntry);
   const navigate = useNavigate();
   const date = new Date();
@@ -49,6 +63,22 @@ export default function WriteJournalEntry() {
   };
 
   const handleSaveToStore = () => {
+    if (!title) {
+      setError("Your journal needs a title. Please add one before saving");
+      return;
+    } else if (!selectedMood) {
+      setError("How are you feeling? Pick an emoji that reflects your mood.");
+      return;
+    } else if (!content) {
+      setError(
+        "Looks like your journal is empty. Write something meaningful to save it."
+      );
+      return;
+    } else if (!tags) {
+      setError("Add at least one tag to help categorize your entry.");
+      return;
+    }
+
     const entry: JournalEntry = {
       title,
       id: crypto.randomUUID(),
@@ -130,9 +160,11 @@ export default function WriteJournalEntry() {
             onUpdateHTMLContent={(newContent) => setContentHTML(newContent)}
           />
           <div className="flex justify-end gap-4 my-2">
-            <button className="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl shadow">
-              Cancel
-            </button>
+            <Link to="/dashboard">
+              <button className="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl shadow">
+                Cancel
+              </button>
+            </Link>
             <button
               onClick={handleSaveToStore}
               className="bg-blue-500 text-white px-4 py-2 rounded-xl shadow"
@@ -151,6 +183,24 @@ export default function WriteJournalEntry() {
           }
         />
       </main>
+
+      {error && (
+        <div className="absolute bottom-10 left-10">
+          <Alert
+            sx={{
+              width: "auto",
+              height: "80px",
+              fontSize: "16px",
+              display: "flex",
+              alignItems: "center",
+              borderRadius: "10px",
+            }}
+            severity="error"
+          >
+            {error}
+          </Alert>
+        </div>
+      )}
     </>
   );
 }
