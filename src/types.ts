@@ -14,11 +14,14 @@ export interface Step {
 }
 
 export interface JournalEntry {
-  title: string;
-  date: string;
-  mood: string;
-  text: string;
-  tags: string[];
+  title: string | null;
+  id: string | null;
+  date: string | null;
+  mood: Mood | null;
+  content: string | null;
+  contentInHTML: string | null;
+  tags: Tag[] | null;
+  aiInsight?: AIInsight[] | null;
 }
 
 export interface MessageBubbleProps {
@@ -85,4 +88,17 @@ export interface Mood {
   emoji: string;
   label: string;
   value: string;
+}
+
+export interface Tag {
+  name: string;
+  color: string;
+  fontColor: string;
+}
+
+export interface AIInsight {
+  id: string;
+  title: string;
+  message: string;
+  timeStamp?: Date;
 }

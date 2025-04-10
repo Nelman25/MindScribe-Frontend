@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Button from "./Button";
 
 export default function JournalHeader() {
@@ -9,12 +10,11 @@ export default function JournalHeader() {
 
       <ul className="flex gap-4 justify-between items-center text-xl max-lg:text-base max-md:hidden max-w-[400px] w-full">
         {["Dashboard", "Insights", "Archive", "Settings"].map((item) => (
-          <li
-            key={item}
-            className="hover:text-primary transition-all duration-300"
-          >
-            {item}
-          </li>
+          <Link key={item} to={`/${item}`}>
+            <li className="hover:text-primary transition-all duration-300">
+              {item}
+            </li>
+          </Link>
         ))}
       </ul>
 

@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import FilterButton from "../components/FilterButton";
 import Button from "../components/Button";
 import JournalEntryCard from "../components/JournalEntryCard";
 import DashboardAnalytics from "../sections/DashboardAnalytics";
 import MonthlyMoodAnalysisCard from "../sections/MonthlyMoodAnalysisCard";
-import { JOURNAL_ENTRIES } from "../constants/constants";
+import { useJournalStore } from "../stores/useJournalStore";
 
 const NAV_ITEMS = ["Dashboard", "Insights", "Archive", "Settings"];
 const JOURNAL_FILTERS = [
@@ -18,8 +18,20 @@ const JOURNAL_FILTERS = [
 ];
 
 export default function Dashboard() {
+  const entries = useJournalStore((state) => state.entries);
+  const setSelectedEntry = useJournalStore((state) => state.setSelectedEntry);
+  const navigate = useNavigate();
+
+  const handleSelectEntry = (id: string | null) => {
+    const selectedEntry = entries.find((e) => e.id === id);
+    if (selectedEntry) {
+      setSelectedEntry(selectedEntry);
+      navigate(`/view-entry/${id}`);
+    }
+  };
+
   return (
-    <div className="bg-background h-full">
+    <div className="bg-white h-screen">
       <header className="h-[70px] flex items-center justify-between px-8 sticky top-0 border backdrop-blur-xl shadow z-20">
         <h2 className="text-3xl max-lg:text-xl text-primary font-bold">
           MindScribe
@@ -55,25 +67,41 @@ export default function Dashboard() {
         <MonthlyMoodAnalysisCard />
         <DashboardAnalytics />
 
-        <div className="flex gap-6 py-4 mt-12 overflow-x-scroll w-full max-lg:max-w-[790px]">
+        <div className="flex gap-6 py-4 mt-12 overflow-x-scroll no-scrollbar w-full max-lg:max-w-[790px]">
           {JOURNAL_FILTERS.map((item) => (
             <FilterButton key={item}>{item}</FilterButton>
           ))}
         </div>
 
         {/* Journal entries card */}
-        <div className="grid grid-cols-3 max-2xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
-          {JOURNAL_ENTRIES.map(({ title, date, mood, tags, text }) => (
-            <JournalEntryCard
-              key={text}
-              title={title}
-              date={date}
-              mood={mood}
-              tags={tags}
-              text={text}
-            />
-          ))}
-        </div>
+
+        {entries.length === 0 && (
+          <div className="flex w-full h-[200px] items-center justify-center">
+            <p className="text-center text-xl text-text">
+              You don't have any entries yet, start writing now!
+            </p>
+          </div>
+        )}
+
+        {entries.length !== 0 && (
+          <div className="grid grid-cols-3 max-2xl:grid-cols-2 max-lg:grid-cols-1 gap-4">
+            {entries.map(
+              ({ title, id, date, mood, tags, content, contentInHTML }) => (
+                <button key={id} onClick={() => handleSelectEntry(id)}>
+                  <JournalEntryCard
+                    id={id}
+                    title={title}
+                    date={date}
+                    mood={mood}
+                    tags={tags}
+                    content={content}
+                    contentInHTML={contentInHTML}
+                  />
+                </button>
+              )
+            )}
+          </div>
+        )}
       </main>
     </div>
   );

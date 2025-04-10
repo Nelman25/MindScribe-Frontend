@@ -8,7 +8,7 @@ const FOCUS: FocusType[] = [
   "Questions",
 ];
 
-export default function InsightFocus() {
+export default function InsightFocus({ isViewing }: { isViewing?: boolean }) {
   const [isSelected, setSelected] = useState<FocusType>("Patterns");
 
   const handleSelectInsightFocus = (focus: FocusType) => {
@@ -23,6 +23,7 @@ export default function InsightFocus() {
         {FOCUS.map((item) => (
           <button
             key={item}
+            disabled={isViewing}
             onClick={() => handleSelectInsightFocus(item)}
             className={`transition-all duration-300 p-2 text-sm min-w-[130px] rounded-xl ${
               isSelected === item
