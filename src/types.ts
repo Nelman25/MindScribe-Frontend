@@ -19,8 +19,9 @@ export interface JournalEntry {
   date: string | null;
   mood: Mood | null;
   content: string | null;
+  contentInHTML: string | null;
   tags: Tag[] | null;
-  aiInsight?: string;
+  aiInsight?: string | null;
 }
 
 export interface MessageBubbleProps {
@@ -93,4 +94,10 @@ export interface Tag {
   name: string;
   color: string;
   fontColor: string;
+}
+
+export interface AIInsight {
+  id: string;
+  title: string;
+  message: string;
 }

@@ -8,12 +8,14 @@ import Underline from "@tiptap/extension-underline";
 
 interface RichTextEditorProps {
   content?: string;
-  onChange: (content: string) => void;
+  onUpdateContent: (content: string) => void;
+  onUpdateHTMLContent: (content: string) => void;
 }
 
 export default function RichTextEditor({
   content = "",
-  onChange,
+  onUpdateContent,
+  onUpdateHTMLContent,
 }: RichTextEditorProps) {
   const editor = useEditor({
     extensions: [
@@ -52,7 +54,8 @@ export default function RichTextEditor({
     },
     content,
     onUpdate: ({ editor }) => {
-      onChange(editor.getText());
+      onUpdateContent(editor.getText());
+      onUpdateHTMLContent(editor.getHTML());
     },
   });
 

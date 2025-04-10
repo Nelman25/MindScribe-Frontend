@@ -21,7 +21,9 @@ export const useJournalStore = create<JournalStoreState>()(
         date: null,
         mood: null,
         content: null,
+        contentInHTML: null,
         tags: null,
+        aiInsight: null,
       },
 
       // function actions
@@ -30,7 +32,7 @@ export const useJournalStore = create<JournalStoreState>()(
           currentEntry: entry,
           entries: [...state.entries, entry],
         })),
-      
+
       setMonthlyMoodAnalysis: (analysis) =>
         set(() => ({ monthlyMoodAnalysis: analysis })),
     }),

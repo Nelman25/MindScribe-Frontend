@@ -1,12 +1,16 @@
 import { useCreateJournalEntry } from "../hooks/useCreateJournalEntry";
-import AIInsight from "../components/AIInsight";
+import { useJournalStore } from "../stores/useJournalStore";
+
+import AIInsightChatbox from "../components/AIInsightChatbox";
 import JournalHeader from "../components/JournalHeader";
 import MoodSelector from "../components/MoodSelector";
 import RichTextEditor from "../components/RichTextEditor";
 import { JOURNAL_TAGS } from "../constants/constants";
+
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { JournalEntry, Tag } from "../types";
-import { useJournalStore } from "../stores/useJournalStore";
 
 export default function WriteJournalEntry() {
   const {
@@ -14,15 +18,19 @@ export default function WriteJournalEntry() {
     setTitle,
     content,
     setContent,
+    contentHTML,
+    setContentHTML,
     selectedMood,
     setSelectedMood,
+    insightsState,
+    setInsightsState,
     addTag,
     removeTag,
     tags,
   } = useCreateJournalEntry();
   const [tagsChoices, setTagsChoices] = useState<Tag[]>(JOURNAL_TAGS);
   const setEntry = useJournalStore((state) => state.setEntry);
-  const entries = useJournalStore((state) => state.entries);
+  const navigate = useNavigate();
   const date = new Date();
   const formattedDate = date?.toLocaleDateString("en-US", {
     month: "long",
@@ -46,14 +54,14 @@ export default function WriteJournalEntry() {
       id: crypto.randomUUID(),
       date: formattedDate,
       content,
+      contentInHTML: contentHTML,
       mood: selectedMood,
       tags,
     };
 
     setEntry(entry);
+    navigate("/dashboard");
   };
-
-  console.log(entries);
 
   return (
     <>
@@ -118,7 +126,8 @@ export default function WriteJournalEntry() {
           {/* Actual canvas */}
           <RichTextEditor
             content={content}
-            onChange={(newContent) => setContent(newContent)}
+            onUpdateContent={(newContent) => setContent(newContent)}
+            onUpdateHTMLContent={(newContent) => setContentHTML(newContent)}
           />
           <div className="flex justify-end gap-4 my-2">
             <button className="bg-gray-100 text-gray-600 px-4 py-2 rounded-xl shadow">
@@ -134,7 +143,13 @@ export default function WriteJournalEntry() {
         </div>
 
         {/* AI Insights */}
-        <AIInsight />
+        <AIInsightChatbox
+          AIInsights={insightsState}
+          // unsure pa sa implementation, will check later
+          onUpdateAIInsights={(insightsState) =>
+            setInsightsState((prev) => [...(prev ?? []), insightsState])
+          }
+        />
       </main>
     </>
   );
