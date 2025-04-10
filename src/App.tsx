@@ -4,6 +4,7 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import WriteJournalEntry from "./pages/WriteJournalEntry";
+import ViewJournalEntry from "./pages/ViewJournalEntry";
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
       { index: true, element: <LandingPage /> },
       { path: "dashboard", element: <Dashboard /> },
       { path: "new-entry", element: <WriteJournalEntry /> },
-      { path: "journal-entries/:id", element: <div>journal page</div> },
+      { path: "view-entry/:id", element: <ViewJournalEntry /> },
     ],
   },
   { path: "login", element: <Login /> },

@@ -1,0 +1,70 @@
+import { useParams } from "react-router-dom";
+import JournalHeader from "../components/JournalHeader";
+import { useJournalStore } from "../stores/useJournalStore";
+import { JournalEntry } from "../types";
+import AIInsight from "../components/AIInsightChatbox";
+
+export default function ViewJournalEntry() {
+  const { id } = useParams();
+  const entries = useJournalStore<JournalEntry[]>((state) => state.entries);
+  const selectedEntry = entries.find((e) => e.id === id);
+
+  console.log(selectedEntry);
+
+  return (
+    <div>
+      <JournalHeader />
+
+      <main className="px-16 py-12 max-w-[1440px] max-h-[850px] mx-auto flex gap-6">
+        {/* Entry info section */}
+        <div className="w-2/3 h-[850px] flex flex-col">
+          {/* white box */}
+          <div className="w-full flex-1 bg-white/80 border border-gray-50 rounded-xl shadow mb-4 p-6">
+            <div className="flex justify-between items-center text-text mb-4">
+              <h2 className="text-2xl">{selectedEntry?.title}</h2>
+              <span>{selectedEntry?.date}</span>
+            </div>
+            <p className="text-xl text-text mb-4">
+              Mood: {selectedEntry?.mood?.emoji}
+            </p>
+            <div className="flex gap-2">
+              <span>Tags:</span>
+              {selectedEntry?.tags?.map((tag) => (
+                <button
+                  key={tag.name}
+                  className="px-3 py-1 rounded-full text-sm font-medium flex items-center"
+                  style={{ color: tag.fontColor, backgroundColor: tag.color }}
+                >
+                  {tag.name}
+                </button>
+              ))}
+            </div>
+
+            {/* Display HTML version of the content to preserve format stuff */}
+            {/* NOTE: hindi naaadd yung paragraph spacing, will fix later on. */}
+            <div
+              className="my-4"
+              dangerouslySetInnerHTML={{
+                __html: selectedEntry?.contentInHTML || "",
+              }}
+            />
+          </div>
+
+          {/* buttons bellow */}
+          {/* TODO: implement button actions */}
+          <div className="flex justify-end gap-4">
+            <button className="bg-white border border-gray-200 text-gray-600 px-4 py-2 rounded-xl shadow">
+              Cancel
+            </button>
+            <button className="bg-blue-500 text-white px-4 py-2 rounded-xl shadow">
+              Edit Entry
+            </button>
+          </div>
+        </div>
+
+        {/* View AI Insights */}
+        <AIInsight isViewing={true} />
+      </main>
+    </div>
+  );
+}
